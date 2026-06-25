@@ -60,6 +60,20 @@ A Streamlit web application was developed to allow users to:
 - Predict the sentiment
 - Display the sentiment as Positive, Neutral, or Negative
 
+## Streamlit Application Screenshots
+
+### Positive Sentiment Prediction
+
+![Positive Prediction](app_screenshot_positive.png)
+
+### Negative Sentiment Prediction
+
+![Negative Prediction](app_screenshot_negative.png)
+
+### Neutral Sentiment Prediction
+
+![Neutral Prediction](app_screenshot_neutral.png)
+
 ## How to Run
 
 1. Install the required libraries.
