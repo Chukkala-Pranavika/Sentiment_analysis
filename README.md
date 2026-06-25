@@ -64,15 +64,15 @@ A Streamlit web application was developed to allow users to:
 
 ### Positive Sentiment Prediction
 
-![Positive Prediction](app_screenshot_positive.png)
+![Positive Prediction](app_screenshot_positive_prediction.png)
 
 ### Negative Sentiment Prediction
 
-![Negative Prediction](app_screenshot_negative.png)
+![Negative Prediction](app_screenshot_negative_prediction.png)
 
 ### Neutral Sentiment Prediction
 
-![Neutral Prediction](app_screenshot_neutral.png)
+![Neutral Prediction](app_screenshot_neutral_prediction.png)
 
 ## How to Run
 
