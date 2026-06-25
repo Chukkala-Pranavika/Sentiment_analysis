@@ -71,14 +71,4 @@ streamlit run sentiment_app.py
 4. Open the local URL displayed in the browser.
 5. Enter any text and click **Predict Sentiment**.
 
-## How to Run
-
-1. Install the required libraries.
-2. Open the project folder.
-3. Run the following command:
-
-streamlit run sentiment_app.py
-
-4. Open the local URL displayed in the browser.
-5. Enter any text and click **Predict Sentiment**.
 
