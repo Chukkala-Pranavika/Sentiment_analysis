@@ -6,11 +6,20 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 
-model = joblib.load("best_sentiment_model.pkl")
-tfidf = joblib.load("tfidf.pkl")
+@st.cache_resource
+def load_model():
+    model = joblib.load("best_sentiment_model.pkl")
+    tfidf = joblib.load("tfidf.pkl")
+    return model, tfidf
+
+model, tfidf = load_model()
 
 stop_words = set(stopwords.words("english"))
 lemmatizer = WordNetLemmatizer()
+
+# Keep negation words — removing them breaks phrases like "not bad"
+negation_words = {"not", "no", "nor", "never", "n't"}
+custom_stopwords = stop_words - negation_words
 
 def clean_text(text):
     text = text.lower()
@@ -19,7 +28,7 @@ def clean_text(text):
 
     words = text.split()
 
-    words = [word for word in words if word not in stop_words]
+    words = [word for word in words if word not in custom_stopwords]
 
     words = [lemmatizer.lemmatize(word) for word in words]
 
@@ -121,4 +130,7 @@ with st.expander("ℹ About This Project"):
     - Neutral
     - Negative
     """)
+    
+
+
     
