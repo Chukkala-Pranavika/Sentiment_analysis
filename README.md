@@ -56,11 +56,11 @@ The models were evaluated using:
 
 
 
-\## Known Issues \& Fixes
+## Known Issues & Fixes
 
 
 
-\### Negation handling bug (fixed)
+### Negation handling bug (fixed)
 
 
 
@@ -70,19 +70,19 @@ Issue: During manual testing, the input "The movie was not bad" was incorrectly 
 
 Fix:
 
-1\. Excluded negation words (not, no, nor, never, n't) from the stopword removal step.
+1. Excluded negation words (not, no, nor, never, n't) from the stopword removal step.
 
-2\. Added bigrams to the TF-IDF vectorizer (ngram\_range=(1,2)) so two-word phrases like "not bad" can be captured as a single meaningful feature.
+2. Added bigrams to the TF-IDF vectorizer (ngram\_range=(1,2)) so two-word phrases like "not bad" can be captured as a single meaningful feature.
 
 
 
 Result:
 
-\- Cleaned text for "The movie was not bad" changed from "movie bad" to "movie not bad"
+- Cleaned text for "The movie was not bad" changed from "movie bad" to "movie not bad"
 
-\- Prediction changed from Negative (incorrect) to Neutral (reasonable)
+- Prediction changed from Negative (incorrect) to Neutral (reasonable)
 
-\- Accuracy improved across all three models after retraining:
+- Accuracy improved across all three models after retraining:
 
 
 
@@ -96,17 +96,17 @@ Naive Bayes | 63.17% | 64.30%
 
 
 
-\## Limitations \& Future Improvements
+## Limitations & Future Improvements
 
 
 
-\- TF-IDF still doesn't capture deep semantic meaning beyond bigrams - a transformer-based model (BERT) would likely perform better.
+- TF-IDF still doesn't capture deep semantic meaning beyond bigrams - a transformer-based model (BERT) would likely perform better.
 
-\- Dataset has mild class imbalance (Neutral is majority class) - could address with class weighting or oversampling.
+- Dataset has mild class imbalance (Neutral is majority class) - could address with class weighting or oversampling.
 
-\- Hyperparameter tuning (GridSearchCV) was not performed and could further improve accuracy.
+- Hyperparameter tuning (GridSearchCV) was not performed and could further improve accuracy.
 
-\- Streamlit app uses @st.cache\_resource to avoid reloading the model on every interaction.
+- Streamlit app uses @st.cache\_resource to avoid reloading the model on every interaction.
 
 ## Streamlit Application
 
