@@ -56,11 +56,19 @@ The models were evaluated using:
 
 
 
+<<<<<<< HEAD
 \## Known Issues \& Fixes
 
 
 
 \### Negation handling bug (fixed)
+=======
+## Known Issues & Fixes
+
+
+
+### Negation handling bug (fixed)
+>>>>>>> 1b61944bced12ea65c984f2f6d6639ab175940a0
 
 
 
@@ -70,19 +78,33 @@ Issue: During manual testing, the input "The movie was not bad" was incorrectly 
 
 Fix:
 
+
 1\. Excluded negation words (not, no, nor, never, n't) from the stopword removal step.
 
 2\. Added bigrams to the TF-IDF vectorizer (ngram\_range=(1,2)) so two-word phrases like "not bad" can be captured as a single meaningful feature.
+
+1. Excluded negation words (not, no, nor, never, n't) from the stopword removal step.
+
+2. Added bigrams to the TF-IDF vectorizer (ngram\_range=(1,2)) so two-word phrases like "not bad" can be captured as a single meaningful feature.
+
 
 
 
 Result:
 
+<<<<<<< HEAD
 \- Cleaned text for "The movie was not bad" changed from "movie bad" to "movie not bad"
 
 \- Prediction changed from Negative (incorrect) to Neutral (reasonable)
 
 \- Accuracy improved across all three models after retraining:
+=======
+- Cleaned text for "The movie was not bad" changed from "movie bad" to "movie not bad"
+
+- Prediction changed from Negative (incorrect) to Neutral (reasonable)
+
+- Accuracy improved across all three models after retraining:
+>>>>>>> 1b61944bced12ea65c984f2f6d6639ab175940a0
 
 
 
@@ -96,6 +118,7 @@ Naive Bayes | 63.17% | 64.30%
 
 
 
+<<<<<<< HEAD
 \## Limitations \& Future Improvements
 
 
@@ -107,6 +130,19 @@ Naive Bayes | 63.17% | 64.30%
 \- Hyperparameter tuning (GridSearchCV) was not performed and could further improve accuracy.
 
 \- Streamlit app uses @st.cache\_resource to avoid reloading the model on every interaction.
+=======
+## Limitations & Future Improvements
+
+
+
+- TF-IDF still doesn't capture deep semantic meaning beyond bigrams - a transformer-based model (BERT) would likely perform better.
+
+- Dataset has mild class imbalance (Neutral is majority class) - could address with class weighting or oversampling.
+
+- Hyperparameter tuning (GridSearchCV) was not performed and could further improve accuracy.
+
+- Streamlit app uses @st.cache\_resource to avoid reloading the model on every interaction.
+>>>>>>> 1b61944bced12ea65c984f2f6d6639ab175940a0
 
 ## Streamlit Application
 
