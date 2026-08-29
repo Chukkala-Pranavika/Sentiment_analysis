@@ -52,97 +52,42 @@ The models were evaluated using:
 * F1-Score
 * Confusion Matrix
 
-
-
-
-
-<<<<<<< HEAD
-\## Known Issues \& Fixes
-
-
-
-\### Negation handling bug (fixed)
-=======
 ## Known Issues & Fixes
 
-
-
 ### Negation handling bug (fixed)
->>>>>>> 1b61944bced12ea65c984f2f6d6639ab175940a0
-
-
 
 Issue: During manual testing, the input "The movie was not bad" was incorrectly classified as Negative. Tracing the pipeline showed that NLTK's default English stopword list includes the word "not", so the cleaning step was silently deleting it - turning "not bad" into just "bad" before the model ever saw the negation.
 
-
-
 Fix:
 
-
-1\. Excluded negation words (not, no, nor, never, n't) from the stopword removal step.
-
-2\. Added bigrams to the TF-IDF vectorizer (ngram\_range=(1,2)) so two-word phrases like "not bad" can be captured as a single meaningful feature.
-
 1. Excluded negation words (not, no, nor, never, n't) from the stopword removal step.
-
-2. Added bigrams to the TF-IDF vectorizer (ngram\_range=(1,2)) so two-word phrases like "not bad" can be captured as a single meaningful feature.
-
-
-
+2. Added bigrams to the TF-IDF vectorizer (ngram_range=(1,2)) so two-word phrases like "not bad" can be captured as a single meaningful feature.
 
 Result:
 
-<<<<<<< HEAD
-\- Cleaned text for "The movie was not bad" changed from "movie bad" to "movie not bad"
-
-\- Prediction changed from Negative (incorrect) to Neutral (reasonable)
-
-\- Accuracy improved across all three models after retraining:
-=======
 - Cleaned text for "The movie was not bad" changed from "movie bad" to "movie not bad"
-
 - Prediction changed from Negative (incorrect) to Neutral (reasonable)
-
 - Accuracy improved across all three models after retraining:
->>>>>>> 1b61944bced12ea65c984f2f6d6639ab175940a0
 
+| Model | Before Fix | After Fix |
+|---|---|---|
+| Logistic Regression | 68.60% | 69.14% |
+| SVM | 66.99% | 67.87% |
+| Naive Bayes | 63.17% | 64.30% |
 
+## Additional Experiments
 
-Model | Before Fix | After Fix
+- Refactored preprocessing + TF-IDF + model into a single scikit-learn Pipeline
+- Added 5-fold cross-validation: Mean F1 = 0.694 (+/- 0.001)
+- Tested class_weight='balanced': improved macro-F1 to 0.697
+- Compared against a pre-trained BERT model (distilbert-sst2) on 500 test samples: BERT lacks a Neutral class, so this isn't a perfectly fair comparison, but it highlighted that a generic 2-class pre-trained model isn't a drop-in replacement for a model trained on the exact task/label scheme.
 
-Logistic Regression | 68.60% | 69.14%
-
-SVM | 66.99% | 67.87%
-
-Naive Bayes | 63.17% | 64.30%
-
-
-
-<<<<<<< HEAD
-\## Limitations \& Future Improvements
-
-
-
-\- TF-IDF still doesn't capture deep semantic meaning beyond bigrams - a transformer-based model (BERT) would likely perform better.
-
-\- Dataset has mild class imbalance (Neutral is majority class) - could address with class weighting or oversampling.
-
-\- Hyperparameter tuning (GridSearchCV) was not performed and could further improve accuracy.
-
-\- Streamlit app uses @st.cache\_resource to avoid reloading the model on every interaction.
-=======
 ## Limitations & Future Improvements
 
-
-
-- TF-IDF still doesn't capture deep semantic meaning beyond bigrams - a transformer-based model (BERT) would likely perform better.
-
-- Dataset has mild class imbalance (Neutral is majority class) - could address with class weighting or oversampling.
-
-- Hyperparameter tuning (GridSearchCV) was not performed and could further improve accuracy.
-
-- Streamlit app uses @st.cache\_resource to avoid reloading the model on every interaction.
->>>>>>> 1b61944bced12ea65c984f2f6d6639ab175940a0
+- TF-IDF still doesn't capture deep semantic meaning beyond bigrams - a transformer-based model (BERT), fine-tuned on this task, would likely perform better.
+- Dataset has mild class imbalance (Neutral is majority class) - addressed partially with class_weight='balanced'.
+- Full hyperparameter tuning (GridSearchCV) was not performed and could further improve accuracy.
+- Streamlit app uses @st.cache_resource to avoid reloading the model on every interaction.
 
 ## Streamlit Application
 
@@ -157,20 +102,5 @@ A Streamlit web application was developed to allow users to:
 1. Install the required libraries.
 2. Open the project folder.
 3. Run the following command:
-
-streamlit run sentiment\_app.py
-
 4. Open the local URL displayed in the browser.
 5. Enter any text and click **Predict Sentiment**.
-
-## How to Run
-
-1. Install the required libraries.
-2. Open the project folder.
-3. Run the following command:
-
-streamlit run sentiment\_app.py
-
-4. Open the local URL displayed in the browser.
-5. Enter any text and click **Predict Sentiment**.
-
