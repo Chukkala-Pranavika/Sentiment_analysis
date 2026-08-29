@@ -6,11 +6,20 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 
-model = joblib.load("best_sentiment_model.pkl")
-tfidf = joblib.load("tfidf.pkl")
+@st.cache_resource
+def load_model():
+    model = joblib.load("best_sentiment_model.pkl")
+    tfidf = joblib.load("tfidf.pkl")
+    return model, tfidf
+
+model, tfidf = load_model()
 
 stop_words = set(stopwords.words("english"))
 lemmatizer = WordNetLemmatizer()
+
+# Keep negation words — removing them breaks phrases like "not bad"
+negation_words = {"not", "no", "nor", "never", "n't"}
+custom_stopwords = stop_words - negation_words
 
 def clean_text(text):
     text = text.lower()
@@ -19,21 +28,69 @@ def clean_text(text):
 
     words = text.split()
 
-    words = [word for word in words if word not in stop_words]
+    words = [word for word in words if word not in custom_stopwords]
 
     words = [lemmatizer.lemmatize(word) for word in words]
 
     return " ".join(words)
 
-st.title("Sentiment Analysis App")
+st.title("📊 Sentiment Analysis using Machine Learning")
 
-st.write("Enter any text below to predict its sentiment.")
+st.markdown("""
+This application analyzes text sentiment and classifies it into:
+
+- 😊 Positive
+- 😐 Neutral
+- 😞 Negative
+
+Enter your text below and click **Predict Sentiment**.
+""")
+
+st.sidebar.header("About Project")
+
+st.sidebar.write("""
+Dataset: Twitter Sentiment Dataset
+
+Models Used:
+- Logistic Regression
+- Naive Bayes
+- SVM
+
+Techniques:
+- Text Cleaning
+- Stopword Removal
+- Lemmatization
+- TF-IDF Vectorization
+""")
+
+st.sidebar.header("Sample Reviews")
+
+st.sidebar.info("I really enjoyed this course and learned a lot.")
+
+st.sidebar.info("The service was average and acceptable.")
+
+st.sidebar.info("The product quality was poor and disappointing.")
 
 user_input = st.text_area("Enter your text:")
+if user_input:
+
+    st.subheader("Text Statistics")
+
+    st.write("Words:", len(user_input.split()))
+
+    st.write("Characters:", len(user_input))
 
 if st.button("Predict Sentiment"):
 
+    if user_input.strip() == "":
+        st.warning("Please enter some text")
+        st.stop()
+
     cleaned_text = clean_text(user_input)
+
+    st.write("Processed Text:")
+
+    st.code(cleaned_text)
 
     text_vector = tfidf.transform([cleaned_text])
 
@@ -55,6 +112,25 @@ if st.button("Predict Sentiment"):
 
     else:
         st.info("😐 Neutral")
+        
+with st.expander("ℹ About This Project"):
+
+    st.write("""
+    This project performs sentiment analysis on textual data.
+
+    NLP Steps:
+    - Lowercasing
+    - URL Removal
+    - Stopword Removal
+    - Lemmatization
+    - TF-IDF Vectorization
+
+    Sentiments:
+    - Positive
+    - Neutral
+    - Negative
+    """)
+    
 
 
     
