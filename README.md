@@ -104,3 +104,6 @@ A Streamlit web application was developed to allow users to:
 3. Run the following command:
 4. Open the local URL displayed in the browser.
 5. Enter any text and click **Predict Sentiment**.
+
+## 🔗 Live Demo
+Try it here: https://sentimentanalysis-oqwjmfc7apbtmguhigpegf.streamlit.app/
