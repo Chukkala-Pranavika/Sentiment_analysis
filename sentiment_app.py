@@ -6,6 +6,10 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 
+nltk.download('stopwords', quiet=True)
+nltk.download('wordnet', quiet=True)
+nltk.download('omw-1.4', quiet=True)
+
 @st.cache_resource
 def load_model():
     model = joblib.load("best_sentiment_model.pkl")
